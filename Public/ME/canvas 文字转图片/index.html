@@ -50,10 +50,33 @@
 				fillTxt(txt);
 				var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 				var img = $("tmImg");
-				var urls = canvas.toDataURL("image/png");
+				var paths = canvas.toDataURL("image/png");
 				img.style.width = 200 + 'px';
 				img.style.height = 200 + 'px';
-				img.style.background = 'url(' + urls + ')'
+				img.style.background = 'url(' + paths + ')'
+				
+				
+				
+				
+				var type = 'png'; //你想要什么图片格式 就选什么吧
+				var fixtype = function(type) {
+					type = type.toLocaleLowerCase().replace(/jpg/i, 'jpeg');
+					var r = type.match(/png|jpeg|bmp|gif/)[0];
+					return 'image/' + r;
+				};
+				paths = paths.replace(fixtype(type), 'image/octet-stream');
+				//3.0 将图片保存到本地
+				var savaFile = function(data, filename) {
+					var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+					save_link.href = data;
+					save_link.download = filename;
+					var event = document.createEvent('MouseEvents');
+					event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+					save_link.dispatchEvent(event);
+				};
+				var filename = '' + new Date().getSeconds() + '.' + type;
+				//我想用当前秒是可以解决重名的问题了 不行你就换成毫秒
+				savaFile(paths, filename);
 			}
 		</script>
 	</head>
