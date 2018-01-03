@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title>营业执照</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <style>
+            html,body {
+                width: 100%;
+                height: 100%;
+            }
+            
+            #loading {
+                display:none;
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, .5);
+                z-index: 999;
+            }
+            
+            #loadbox {
+                width: 10em;
+                height: 7em;
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                margin: auto;
+            }
+            
+            #loadimg {
+                margin: 0 auto;
+                animation: myfirst 2s infinite linear;
+                -webkit-animation: myfirst 2s infinite linear;
+                display: block;
+            }
+            
+            #loadtex {
+                text-align: center;
+                color: #eee;
+            }
+            
+            @keyframes myfirst {
+                0% {
+                    transform: rotate(0deg);
+                    -ms-transform: rotate(0deg);
+                    /* IE 9 */
+                    -moz-transform: rotate(0deg);
+                    /* Firefox */
+                    -webkit-transform: rotate(0deg);
+                    /* Safari 和 Chrome */
+                    -o-transform: rotate(0deg);
+                }
+                50% {
+                    transform: rotate(180deg);
+                    -ms-transform: rotate(180deg);
+                    /* IE 9 */
+                    -moz-transform: rotate(180deg);
+                    /* Firefox */
+                    -webkit-transform: rotate(180deg);
+                    /* Safari 和 Chrome */
+                    -o-transform: rotate(180deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                    -ms-transform: rotate(360deg);
+                    /* IE 9 */
+                    -moz-transform: rotate(360deg);
+                    /* Firefox */
+                    -webkit-transform: rotate(360deg);
+                    /* Safari 和 Chrome */
+                    -o-transform: rotate(360deg);
+                }
+            }
+        
+        
+            #Image {
+                display: block;
+                width: 600px;
+                height: 500px;
+                margin: 0 auto;
+            }
+            #Imagebig {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+            }
+            .img {
+                width: 100%;
+                height: auto;
+                position: absolute;
+                margin: auto;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0
+            }
+            p {
+                width: 100%;
+                height: 2em;
+                box-sizing: border-box;
+                padding: 5px;
+                line-height: 40px;
+                font-size: 1.2em;
+                margin: 30px;
+                border: 1px solid #eee
+            }
+            p input {
+                height: 60px;
+                width: 60%;
+                font-size: 1.2em;
+                padding: 5px 0;
+                box-sizing: border-box;
+                border: none;
+                border-left: 1px solid #eee
+            }
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="loading">
+            <div id="loadbox">
+                <img id="loadimg" src="img/loading.png" />
+                <div id="loadtex">加载中</div>
+            </div>
+        </div>
+        <div class=" ub-ver uinn">
+            <div class="ub ub-pj ub-ac">
+                <div id=""class="ub-f1">
+                    <div class="btn ub ub-ac bc-text-head ub-pc bc-btn btn-up"  id="btnImg" style="padding: 0px;">
+                        拍照
+                    </div>
+                </div>
+                <hr />
+
+            </div>
+            <hr />
+            <div class="ub ub-pj ub-ac">
+                <div id=""class="ub-f1">
+                    <div class="btn ub ub-ac bc-text-head ub-pc bc-btn btn-up"  id="SelectImg" style="padding: 0px;">
+                        相册
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <hr />
+            <div class="ub ub-pj ub-ac">
+                <div id=""class="ub-f1">
+                    <div class="btn ub ub-ac bc-text-head ub-pc bc-btn btn-up"  id="btnpass" style="padding: 0px;">
+                        返回身份证识别
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <hr />
+            <div class="ub ub-pj ub-ac">
+                <div id=""class="ub-f1">
+                    <div class="btn ub ub-ac bc-text-head ub-pc bc-btn btn-up"  id="btnsign" style="padding: 0px;">
+                        签名
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div class="  ub umar-t" id="Img" >
+                <div class="ub ub-img ub-img6 tx-c "  id="tmImg">
+                    未上传商标图样
+                </div>
+            </div>
+            <p>
+                名称：
+                <input id="name" type="text"/>
+            </p>
+            <p>
+                地址：
+                <input id="address" type="text"/>
+            </p>
+            
+        </div>
+        <script src="js/jquery.js"></script>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.initBounce();
+        })
+        var flieID;
+        function newGuid() {
+            var guid = "";
+            for (var i = 1; i <= 32; i++) {
+                var n = Math.floor(Math.random() * 16.0).toString(16);
+                guid += n;
+                if ((i == 8) || (i == 12) || (i == 16) || (i == 20))
+                    guid += "-";
+            }
+            return guid;
+        }
+        //上传图片
+        function saveImg() {
+            //上传服务器地址
+            fileID=newGuid();
+            appcan.locStorage.setVal('fileID', fileID);
+            console.log(appcan.locStorage.getVal('fileID'));
+            uploadHttp = "http://api.alibiaobiao.cn/FileProcess/BusinessLicense.ashx?phone=13269977244&fileID="+fileID;
+            //创建上传对象
+            uexUploaderMgr.createUploader(1, uploadHttp);
+            //上传文件
+        }
+
+        //相册
+        appcan.button("#SelectImg", "ani-act", function() {
+            var data = {
+                min : 1,
+                max : 1,
+                quality : 0.8,
+                detailedInfo : true
+            }
+            console.log(data)
+            var json = JSON.stringify(data);
+            uexImage.openPicker(json)
+        })
+        
+        appcan.button("#btnpass", "ani-act", function() {
+            appcan.window.open('index','index.html',10)
+        })
+        appcan.button("#btnsign", "ani-act", function() {
+            appcan.window.open('signature','signature.html',10)
+        })
+        //相机
+        appcan.button("#btnImg", "ani-act", function() {
+            uexCamera.cbOpen = function(opId, dataType, data) {
+                console.log("照片的路径：" + data);
+                $("#Img").empty();
+                var str = '<img src="' + data + '" id="Image"/>'
+                $("#Img").append(str)
+                paths = data;
+                saveImg();
+            }
+            uexCamera.open(0, 100);
+        })
+        function cbCreateUploader(id, dataType, data) {
+            if (data == 0) {
+                alert("创建成功");
+                uexUploaderMgr.uploadFile(1, paths, "inputName", 1);
+            } else {
+                alert("创建失败");
+            }
+        }
+
+        function success() {
+            var fileID = appcan.locStorage.getVal('fileID');
+            console.log(fileID);
+            $.ajax({
+                "url" : "http://api.alibiaobiao.cn/api/OCR/GetIDCardInfo?fileID="+fileID,
+                "type" : "get",
+                //"async" : false,
+                "dataType" : "json",
+                "success" : function(response) {
+                    console.log(response);
+                    var data = response.data;
+                    $("#name").val(data.Name);
+                    $("#address").val(data.Address);
+                    $("#loading").css("display","none");
+                }
+            })
+        }
+
+
+        window.uexOnload = function() {
+            uexImage.onPickerClosed = function(info) {
+                var json = JSON.parse(info);
+                var data = json.data;
+                console.log("照片的路径：" + data);
+                $("#Img").empty();
+                var str = '<img src="' + data + '" id="Image"/>'
+                $("#Img").append(str)
+                paths = data;
+                saveImg();
+            }
+            uexUploaderMgr.onStatus = function(opCode, fileSize, percent, serverPath, status) {
+                 console.log(status);
+                switch (status) {
+                case 0:
+                    var str = "上传中：" + percent + "%"
+                    console.log(str);
+                    //$("#percentage").text(str);
+                    $("#loadtex").text(str);
+                    $("#loading").css("display","block");
+                    break;
+                case 1:
+                    success();
+                    //alert("上传成功");
+                    //$("#percentage").text("上传成功");
+                    $("#loadtex").text("上传成功，正在识别...");
+                    $("#loading").css("display","block");
+                    uexUploaderMgr.closeUploader(1);
+                    break;
+                case 2:
+                    $("#loading").css("display","none");
+                    alert("上传失败");
+                    uexUploaderMgr.closeUploader(1);
+                    break;
+                }
+            }
+            uexUploaderMgr.cbCreateUploader = cbCreateUploader;
+        }
+    </script>
+</html>
