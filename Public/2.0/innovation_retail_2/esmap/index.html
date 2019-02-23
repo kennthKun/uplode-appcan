@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html,body{height:100%}
+       #map-container, canvas{height: 100%}
+    </style>
+    <script src="lib/jquery-2.1.4.min.js"></script>
+    <script src="lib/esmap.min.js" > </script >
+</head>
+<body>
+    <button id="btn2D" class="btn btn-default">2D</button>
+    <button id="btn3D" class="btn btn-default">3D</button>
+    <div id="map-container">
+    </div>
+</body>
+
+<script>
+    var ctlOpt = new esmap.ESControlOptions({
+        position: esmap.ESControlPositon.RIGHT_TOP,
+        imgURL: "image/wedgets/"
+    });
+
+
+
+
+    var map = new esmap.ESMap({
+        container:document.getElementById('map-container'), //地图显示容器
+        token:"123436577765432"  //打开地图对应的token
+        //mapDataSrc: "data/", //地图数据位置，与推荐目录相同可省略
+        //mapThemeSrc: "data/theme/", //地图主题位置，与推荐目录相同可省略
+    });
+    map.openMapById(1231);
+
+    //2维模式
+    $('#btn2D').on('click', function () {
+        map.viewMode = esmap.ESViewMode.MODE_2D;//2维模式
+    });
+
+    //3维模式
+    $('#btn3D').on('click', function () {
+        map.viewMode = esmap.ESViewMode.MODE_3D;; //3维模式
+    });
+
+    map.on('loadComplete', function () {
+        //创建楼层控件
+        floorControl = new esmap.ESScrollFloorsControl(map, ctlOpt);
+
+        //单层多层切换按钮
+        var toolControl = new esmap.ESToolControl(map);
+
+        //或者折叠式按钮的楼层控件
+        //floorControl = new esmap.ESButtonFloorsControl(map, ctlOpt);
+    });
+
+    map.on('mapClickNode', function(event) {
+        console.log(event);//此处打印处如上图（比如点击中房间）所示的调试信息
+        if (event.nodeType == esmap.ESNodeType.NONE || event.nodeType == esmap.ESNodeType.FLOOR) return;
+        var model = event;
+        // if (!startPick) return;
+        if(event.nodeType != esmap.ESNodeType.MODEL)
+            model.o3d_.flash({
+                scale: 1.3,
+                time: 0.3
+            }); //闪烁
+        switch (event.nodeType) {
+            case esmap.ESNodeType.MODEL:        //返回房间信息
+                map.storeSelect(model);//高亮
+                break;
+            case esmap.ESNodeType.TEXT_MARKER:  //返回文字POI信息
+                break;
+            case esmap.ESNodeType.FACILITY:     //返回图片POI信息
+                break;
+            case esmap.ESNodeType.IMAGE_MARKER:  //返回自写定义的图片信息
+                break;
+            case esmap.ESNodeType.MODEL3D:      //返回三维模型信息
+                break;
+            case esmap.ESNodeType.LINE:         //返回线信息
+                break;
+        }
+    });
+
+</script>
+</html>
